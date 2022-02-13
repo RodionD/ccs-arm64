@@ -28,6 +28,7 @@ jobs:
     - name: Helm auth
       if: success()
       run: |
+        mkdir -p ~/.oci/
         touch ~/.oci/config
         oci ce cluster create-kubeconfig \
         --cluster-id ocid1.cluster.oc1.eu-amsterdam-1.aaaaaaaatifbmpbkmf2bttayqewfcm6zslbwbp2pjtfrlwa6xc3si54626ma \
