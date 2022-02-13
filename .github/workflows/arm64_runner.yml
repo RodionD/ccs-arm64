@@ -19,7 +19,7 @@ jobs:
       run: |
         dnf -y install oraclelinux-developer-release-el8
         dnf -y install python36-oci-cli
-        dnf -u install helm
+        dnf -y install helm
     - name: Helm auth
       if: success()
       run: |
