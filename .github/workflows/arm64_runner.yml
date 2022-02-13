@@ -28,10 +28,7 @@ jobs:
     - name: Helm auth
       if: success()
       run: |
-        mkdir -p ~/.oci/
-        touch ~/.oci/config
-        oci setup repair-file-permissions --file /github/home/.oci/config 
-        oci ce cluster create-kubeconfig \
+        echo y | oci ce cluster create-kubeconfig \
         --cluster-id ocid1.cluster.oc1.eu-amsterdam-1.aaaaaaaatifbmpbkmf2bttayqewfcm6zslbwbp2pjtfrlwa6xc3si54626ma \
         --file $HOME/.kube/config --region eu-amsterdam-1 --token-version 2.0.0 --overwrite --kube-endpoint PUBLIC_ENDPOINT
     - name: Add and update nessesary helm repos
