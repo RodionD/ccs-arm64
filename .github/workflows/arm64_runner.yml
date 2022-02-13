@@ -40,8 +40,7 @@ jobs:
           --namespace custom-runner \
           --version v1.6.1 \
           --wait \
-          --set installCRDs=true \
-          -f ./runner-values.yaml
+          --set installCRDs=true 
     - name: Helm upgrade (--install) action runner controller chart
       if: success()
       shell: sh
@@ -53,8 +52,7 @@ jobs:
           --namespace custom-runner \
           --wait \
           --set=authSecret.create=true \
-          --set=authSecret.github_token="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" \
-          -f ./runner-values.yaml
+          --set=authSecret.github_token="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"
     - name: Helm upgrade (--install) self-hosted runner chart
       if: success()
       shell: sh
@@ -65,6 +63,4 @@ jobs:
           --install \
           --debug \
           --namespace custom-runner \
-          --wait \
-          -f ./runner-values.yaml
-          
+          --wait 
