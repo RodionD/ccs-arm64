@@ -10,7 +10,7 @@ jobs:
   deploy-runner:
     runs-on: [ self-hosted ]
     container:
-      image: oraclelinux
+      image: oraclelinux:8.5
     steps:
     - name: Checkout chart sources
       uses: actions/checkout@v2
