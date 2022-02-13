@@ -1,0 +1,28 @@
+apiVersion: actions.summerwind.dev/v1alpha1
+kind: RunnerDeployment
+metadata:
+  name: runner-deployment
+  namespace: "custom-runner"
+spec:
+  template:
+    spec:
+      ephemeral: true
+      dockerEnabled: true
+      repository: RodionD/ccs-arm64
+      labels:
+      - k8s-runner
+      env: []
+---
+apiVersion: actions.summerwind.dev/v1alpha1
+kind: HorizontalRunnerAutoscaler
+metadata:
+  name: runner-deployment-autoscaler
+  namespace: "custom-runner"
+spec:
+  scaleTargetRef:
+    name: runner-deployment
+  minReplicas: 0
+  maxReplicas: 2
+  metrics:
+  - type: TotalNumberOfQueuedAndInProgressWorkflowRuns
+    repositoryNames: []
