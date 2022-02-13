@@ -14,7 +14,10 @@ jobs:
     steps:
     - name: Checkout chart sources
       uses: actions/checkout@v2
-
+    - name: Install OCI
+      if: success()
+      run: |
+        bash -c "$(curl -L https://raw.githubusercontent.com/oracle/oci-cli/master/scripts/install/install.sh --accept-all-defaults)"
     - name: Helm auth
       if: success()
       run: |
