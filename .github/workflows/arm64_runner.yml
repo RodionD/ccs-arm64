@@ -28,7 +28,10 @@ jobs:
     - name: Helm auth
       if: success()
       run: |
-        rm -rf ~/.oci/config
+        mkdir -p ~/.oci
+        echo "${{ secrets.oraclepem }}" > ~/.oci/oracleidentitycloudservice_rodion2000-02-08-17-28.pem
+        echo "${{ secrets.oracleconfig }}" > ~/.oci/config
+        ls -l ~/.oci
         echo y | oci ce cluster create-kubeconfig \
         --cluster-id ocid1.cluster.oc1.eu-amsterdam-1.aaaaaaaatifbmpbkmf2bttayqewfcm6zslbwbp2pjtfrlwa6xc3si54626ma \
         --file $HOME/.kube/config --region eu-amsterdam-1 --token-version 2.0.0 --overwrite --kube-endpoint PUBLIC_ENDPOINT
@@ -63,7 +66,7 @@ jobs:
           --namespace custom-runner \
           --wait \
           --set=authSecret.create=true \
-          --set=authSecret.github_token="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"
+          --set=authSecret.github_token="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"
     - name: Helm upgrade (--install) self-hosted runner chart
       if: success()
       shell: sh
