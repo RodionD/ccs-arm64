@@ -21,9 +21,9 @@ jobs:
         apk upgrade
         apk --no-cache add curl
         apk --no-cache add bash
-        curl https://raw.githubusercontent.com/oracle/oci-cli/master/scripts/install/install.sh --output install.sh
-        chown 770 ./install.sh
-        ./install.sh --accept-all-defaults
+        curl https://raw.githubusercontent.com/oracle/oci-cli/master/scripts/install/install.sh --output /tmp/install.sh
+        chown 770 /tmp/install.sh
+        /tmp/install.sh --accept-all-defaults
     - name: Helm auth
       if: success()
       run: |
