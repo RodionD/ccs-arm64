@@ -22,7 +22,7 @@ jobs:
         apk --no-cache add curl bash python3
         curl -L -O https://raw.githubusercontent.com/oracle/oci-cli/master/scripts/install/install.sh
         chmod 770 ./install.sh
-        ./install.sh --accept-all-defaults
+        ./install.sh --accept-all-defaults --offline-install
     - name: Helm auth
       if: success()
       run: |
