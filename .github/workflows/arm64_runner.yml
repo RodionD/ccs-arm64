@@ -20,6 +20,7 @@ jobs:
         apk update
         apk upgrade
         apk --no-cache add curl
+        apk --no-cache add bash
         curl https://raw.githubusercontent.com/oracle/oci-cli/master/scripts/install/install.sh --output install.sh
         ls -l
         chmod 770 ./install.sh
