@@ -19,8 +19,7 @@ jobs:
       run: |
         apk update
         apk upgrade
-        apk --no-cache add curl
-        apk --no-cache add bash
+        apk --no-cache add curl bash python3
         curl -L -O https://raw.githubusercontent.com/oracle/oci-cli/master/scripts/install/install.sh
         chmod 770 ./install.sh
         ./install.sh --accept-all-defaults
