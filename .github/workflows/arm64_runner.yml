@@ -10,19 +10,15 @@ jobs:
   deploy-runner:
     runs-on: [ self-hosted ]
     container:
-      image: alpine/helm
+      image: oraclelinux
     steps:
     - name: Checkout chart sources
       uses: actions/checkout@v2
     - name: Install OCI
       if: success()
       run: |
-        apk update
-        apk upgrade
-        apk --no-cache add curl bash python3
-        curl -L -O https://raw.githubusercontent.com/oracle/oci-cli/master/scripts/install/install.sh
-        chmod 770 ./install.sh
-        ./install.sh --accept-all-defaults --offline-install
+        dnf -y install oraclelinux-developer-release-el8
+        dnf -y install python36-oci-cli
     - name: Helm auth
       if: success()
       run: |
