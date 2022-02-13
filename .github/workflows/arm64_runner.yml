@@ -1,0 +1,71 @@
+# This is a basic workflow that is manually triggered
+
+name: Manual workflow
+
+# Controls when the action will run. Workflow runs when manually triggered using the UI
+# or API.
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy-runner:
+    runs-on: [ self-hosted ]
+    container:
+      image: alpine/helm
+    steps:
+    - name: Checkout chart sources
+      uses: actions/checkout@v2
+
+    - name: Helm auth
+      if: success()
+      run: |
+        oci ce cluster create-kubeconfig \
+        --cluster-id ocid1.cluster.oc1.eu-amsterdam-1.aaaaaaaatifbmpbkmf2bttayqewfcm6zslbwbp2pjtfrlwa6xc3si54626ma \
+        --file $HOME/.kube/config --region eu-amsterdam-1 --token-version 2.0.0  --kube-endpoint PUBLIC_ENDPOINT \
+    - name: Add and update nessesary helm repos
+      if: success()
+      shell: sh
+      run: |
+        helm repo add jetstack https://charts.jetstack.io
+        helm repo add actions-runner-controller https://actions-runner-controller.github.io/actions-runner-controller
+        helm repo update   
+    - name: Helm upgrade (--install) certmanager chart
+      if: success()
+      shell: sh
+      run: |
+        helm upgrade cert-manager \
+          jetstack/cert-manager \
+          --install \
+          --debug \
+          --create-namespace \
+          --namespace custom-runner \
+          --version v1.6.1 \
+          --wait \
+          --set installCRDs=true \
+          -f ./runner-values.yaml
+    - name: Helm upgrade (--install) action runner controller chart
+      if: success()
+      shell: sh
+      run: |
+        helm upgrade action-runner-controller \
+          actions-runner-controller/actions-runner-controller \
+          --install \
+          --debug  \
+          --namespace custom-runner \
+          --wait \
+          --set=authSecret.create=true \
+          --set=authSecret.github_token="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" \
+          -f ./runner-values.yaml
+    - name: Helm upgrade (--install) self-hosted runner chart
+      if: success()
+      shell: sh
+      run: |
+        helm upgrade \
+          custom-runner \
+          ./charts/runner \
+          --install \
+          --debug \
+          --namespace custom-runner \
+          --wait \
+          -f ./runner-values.yaml
+          
