@@ -19,7 +19,12 @@ jobs:
       run: |
         dnf -y install oraclelinux-developer-release-el8
         dnf -y install python36-oci-cli
-        dnf -y install helm
+        dnf -y install openssl
+        dnf -y install tar
+        cd /usr/local/bin
+        curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
+        chmod 700 get_helm.sh
+        ./get_helm.sh
     - name: Helm auth
       if: success()
       run: |
