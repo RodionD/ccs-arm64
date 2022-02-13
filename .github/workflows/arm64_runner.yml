@@ -13,7 +13,7 @@ jobs:
       image: oraclelinux:8.5
     steps:
     - name: Checkout chart sources
-      uses: actions/checkout@v2
+      uses: actions/checkout@v1
     - name: Install OCI
       if: success()
       run: |
