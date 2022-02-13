@@ -17,6 +17,9 @@ jobs:
     - name: Install OCI
       if: success()
       run: |
+        apk update
+        apk upgrade
+        apk --no-cache add curl
         sh -c "$(curl -L https://raw.githubusercontent.com/oracle/oci-cli/master/scripts/install/install.sh --accept-all-defaults)"
     - name: Helm auth
       if: success()
